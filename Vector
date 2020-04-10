@@ -1,0 +1,49 @@
+/*
+
+Vector in JAVA
+
+*/
+
+
+import java.util.*;
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+	    
+	   Scanner s=new Scanner(System.in);
+	   String ss="";
+	  
+	   Vector<String> v=new Vector<String>();
+	   
+	   int index=0;
+	   
+	   while(index!=3){
+	       index=s.nextInt();
+	       
+	       switch(index){
+	           
+	           case 1:
+	               ss=s.next();
+	               v.add(ss);
+	               break;
+	               
+	           case 2:
+	               //System.out.println(v);
+	               Iterator iter=v.iterator();
+	               while(iter.hasNext()){
+	                   System.out.println(iter.next());
+	               }
+	               break;
+	               
+	           case 3:
+	               break;
+	       }
+	   }
+	  
+	   
+	}
+}
+//...
