@@ -1,0 +1,119 @@
+import java.util.*;
+
+
+
+
+class node{
+    String ss;
+    node next;
+    node(String ss){
+        this.ss=ss;
+        next=null;
+    }
+}
+
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+
+
+
+	   Scanner s=new Scanner(System.in);
+
+     String ss="";
+	   
+     int index=0;
+	   
+     node first=null,last=null,temp=null;
+	
+	   
+	   
+	   
+     while(index!=5){
+	   
+     index=s.nextInt();
+	       switch(index){
+	           case 1:
+	               ss=s.next();
+	               if(first==null){
+	                   first=new node(ss);
+	                   last=first;
+	               }
+	               else{
+	                   temp=new node(ss);
+	                   last.next=temp;
+	                   last=temp;
+	               }
+	               break;
+	           case 2:
+	               temp=first;
+	               while(temp!=null){
+	                    System.out.println(temp.ss);
+	                    temp=temp.next;
+	               }
+	               break;
+	           case 3:
+	               index=s.nextInt();
+	               ss=s.next();
+	               temp=first;
+	               int count=1;
+	               boolean present=true;
+	               while(count<index && first!=null){
+	                   
+	                   temp=temp.next;
+	                   if(temp==null){
+	                       System.out.println("Out of range");
+	                       present=false;
+	                       break;
+	                   }
+	                   count++;
+	                   
+	               }
+	               if(index==0 && first!=null){//insertion at first index
+	                    node nw=new node(ss);
+	                    nw.next=first;
+	                    first=nw;
+	               }
+	               else if(temp.next==null && first!=null){//insertion at last index
+	                   node nw=new node(ss);
+	                   last.next=nw;
+	                   last=nw;
+	               }
+	               else if(present==true && first!=null){//insertion at given index
+	                    node nw=new node(ss);
+	                    nw.next=temp.next;
+	                    temp.next=nw;
+	               }
+	               break;
+	           case 4:
+	               ss=s.next();
+	               temp=first;
+	               node prev=null;
+	               while(temp!=null){
+	                   if((temp.ss).equals(ss)){
+	                       if(temp==first){
+	                           first=first.next;
+	                       }
+	                       else if(temp==last){
+	                           last=prev;
+	                           last.next=null;
+	                       }
+	                       else{
+	                           prev.next=temp.next;
+	                       }
+	                   }
+	                   prev=temp;
+	                   temp=temp.next;
+	               }
+	               break;
+	           case 5:
+             
+	               //System.exit(0);                 
+	               break;
+	       }
+	   }
+	}
+}
