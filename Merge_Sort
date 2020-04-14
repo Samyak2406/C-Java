@@ -1,0 +1,68 @@
+import java.util.*;
+public class Main
+{
+   
+public static void main(String[] args) {
+System.out.println("Hello World");
+Scanner s=new Scanner(System.in);
+int n=s.nextInt();
+int arr[]=new int[n];
+for(int i=0;i<n;i++){
+   arr[i]=s.nextInt();
+}
+partition(arr,0,n-1,0);
+for(int i=0;i<n;i++)
+    System.out.print(arr[i]+" ");
+}
+
+public static void partition(int arr[],int start,int end,int count){
+   if(start<end){
+       count++;
+       int mid=(start+end)/2;
+      // System.out.println(count+" "+start+" "+end+" "+mid);
+       partition(arr,start,mid,count);
+      // System.out.println(count+" "+start+" "+end+" "+mid);
+       partition(arr,mid+1,end,count);
+      // System.out.println(count+" "+start+" "+end+" "+mid);
+      merge(start,end,mid,arr);
+   }
+}
+public static void merge(int start,int end,int mid,int arr[]){
+   int lsize=mid-start+1;
+   int rsize=end-mid;
+   int l[]=new int[lsize];
+   for(int i=0;i<lsize;i++){
+       l[i]=arr[start+i];
+   }
+   int r[]=new int[lsize];
+   for(int i=0;i<rsize;i++){
+       r[i]=arr[mid+1+i];
+   }
+   int k=start;
+   int p=0,q=0;
+   while(p<lsize && q<rsize){
+       if(l[p]<r[q]){
+           arr[k]=l[p];
+           p++;
+           k++;
+       }
+       else{
+           arr[k]=r[q];
+           q++;
+           k++;
+       }
+   }
+   while(p<lsize){
+       arr[k]=l[p];
+       p++;
+       k++;
+   }
+   while(q<rsize){
+       arr[k]=r[q];
+       q++;
+       k++;
+   }
+}
+
+}
+
