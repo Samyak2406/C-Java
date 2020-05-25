@@ -1,0 +1,50 @@
+public class Main
+{
+    public static int function(char[] arr1,char[] arr2,int len1,int len2){
+        int m[][]=new int[len1+1][len2+2];
+        for(int i=1;i<len1+1;i++){
+            for(int j=1;j<len2+1;j++){
+                if(arr1[i-1]==arr2[j-1]){
+                    m[i][j]=m[i-1][j-1]+1;
+                }
+                else{
+                    m[i][j]=m[i][j-1]>m[i-1][j]?m[i][j-1]:m[i-1][j];
+                }
+            }
+        }
+         for(int i=0;i<len1+1;i++){
+             for(int j=0;j<len2+1;j++){
+                 System.out.print(m[i][j]+" ");
+             }System.out.println();
+         }
+        return m[len1][len2];
+    }
+	public static void main(String[] args) {
+		String s1 = "AGGTAB"; 
+        String s2 = "GXTXAYB"; 
+        char[] arr1=s1.toCharArray();
+        char[] arr2=s2.toCharArray();
+        int l1=arr1.length;
+        int l2=arr2.length;
+        int length=function(arr1,arr2,l1,l2);
+        System.out.println(length);
+	}
+}
+
+
+
+
+//Output:0 0 0 0 0 0 0 0 
+//0 0 0 0 0 1 1 1 
+//0 1 1 1 1 1 1 1 
+//0 1 1 1 1 1 1 1 
+//0 1 1 2 2 2 2 2 
+//0 1 1 2 2 3 3 3 
+//0 1 1 2 2 3 3 4 
+//4
+
+
+
+
+
+//References https://www.geeksforgeeks.org/longest-common-subsequence-dp-4/
