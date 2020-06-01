@@ -1,0 +1,22 @@
+package java_project;
+
+interface i{
+	int value=10;//value is final by default
+	public void printer();
+}
+
+class iface implements i{
+//	i=20;//gives error
+	@Override
+	public void printer() {
+		System.out.println(value);
+	}
+	
+}
+
+public class interfaceJava {
+		public static void main(String[] args) {
+			iface nw=new iface();
+			nw.printer();
+	}
+}
