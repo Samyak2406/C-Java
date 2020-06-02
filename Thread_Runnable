@@ -1,0 +1,34 @@
+
+public class s1 {
+	public static void main(String[] args) {
+		new second();
+		for(int i=0;i<1000;i++) {
+			try {
+				Thread.sleep(8);
+			} catch (Exception e) {}
+			System.out.println("--"+i);
+		}
+	}	
+}
+
+class second implements Runnable{
+	Thread t;
+	
+	second(){
+		t=new Thread(this,"abc");
+		t.start();
+		System.out.println("Thread started");
+	}
+	
+	@Override
+	public void run() {
+		System.out.println("Run started");
+		for(int i=0;i<1000;i++) {
+			try {
+				Thread.sleep(5);
+			} catch (Exception e) {}
+			System.out.println(i);
+		}
+		
+	}	
+}
