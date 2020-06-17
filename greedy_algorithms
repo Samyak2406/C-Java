@@ -1,0 +1,400 @@
+--Knapsack
+
+#include<stdio.h>
+#include<string.h>
+struct node
+{
+float v,w,x;
+};
+int main()
+{
+int a,b,c,d,cc;
+scanf("%d %d",&a,&cc);//number capacity
+struct node aa[a],temp;
+for(b=0;b<a;b++)
+{
+scanf("%f %f",&aa[b].v,&aa[b].w);//value weight
+aa[b].x=aa[b].v/aa[b].w;
+}
+for(b=0;b<a;b++)
+{
+for(c=b;c<a;c++)
+{
+if(aa[b].x<aa[c].x)
+{
+temp=aa[b];
+aa[b]=aa[c];
+aa[c]=temp;
+}
+}
+}float prof=0;
+for(b=0;b<a;b++)
+{
+if(cc-aa[b].w<=0)
+{
+
+
+printf("%f %f\n",cc,cc*aa[b].x); prof=prof+cc*aa[b].x;
+break;
+}
+else
+{
+prof=prof+(aa[b].v);
+//printf("%f %f\n",aa[b].w,aa[b].v);
+cc=cc-aa[b].w;
+}
+}printf("%f",prof);
+return(0);
+}
+	
+	
+--Job Scheduling
+#include<stdio.h>
+struct job
+{
+int dea,prof,seq;
+};
+void main()
+{
+struct job temp,arr[50];
+int a,b,c,d,e,f;
+scanf("%d",&a);//number of jobs
+int ans[a];
+for(b=0;b<a;b++)
+{
+scanf("%d %d",&arr[b].dea,&arr[b].prof);
+arr[b].dea--;
+arr[b].seq=b;
+}
+for(b=0;b<a;b++)
+{
+for(c=b;c<a;c++)
+{
+if(arr[b].prof<arr[c].prof)
+{
+temp=arr[b];
+arr[b]=arr[c];
+arr[c]=temp;
+}
+}//printf("%d   ",arr[b].seq);
+
+}//sorted in desc order of profits
+//printf("\n");
+for(b=0;b<a;b++)
+{
+ans[b]=-1;
+}
+for(b=0;b<a;b++)
+{
+d=arr[b].dea;
+while(d>-1)
+{
+if(ans[d]==-1)
+{
+ans[d]=arr[b].seq;
+ans[d]++;
+//printf("job =%d at d=%d ",arr[b].seq,d);
+break;
+}
+d--;
+}
+}printf("\n");
+for(b=0;b<a;b++)
+{
+printf("%d ",ans[b]);
+}
+}
+	
+	
+	
+	
+--Activity Selection
+
+#include<stdio.h>
+struct act
+{
+    int st,end;
+};
+int main()
+{
+    int a,b,c,d,t;
+    scanf("%d",&t);
+    struct act temp,arr[t];d=0;
+    for(a=0;a<t;a++)
+    {
+      //  printf("\n%d\n",d);
+        //d++;
+        scanf(" %d %d ",&arr[a].st,&arr[a].end);
+    }//printf("\nloop ended\n");
+    for(a=0;a<t;a++)
+    {
+        for(b=a+1;b<t;b++)
+        {
+            if(arr[a].end>arr[b].end)
+            {
+                temp=arr[a];
+                arr[a]=arr[b];
+                arr[b]=temp;
+            }
+        }
+    }c=0;
+    for(a=0;a<t;a++)
+    {
+        if(arr[a].st>=c)
+        {
+            printf("Event starting on %d and ending on %d\n",arr[a].st,arr[a].end);
+            c=arr[a].end;
+        }
+    }
+    return 0;
+}
+	
+	
+	
+--Kruskal
+#include<stdio.h>
+struct node
+{
+int ver,chain;
+};
+struct new
+{
+int st,en,val;
+};
+int main()
+{
+    //for unweighted graph please input in sorted order of values of edges.
+int v,a,b,c,d,e,f,g,h,ans=0,q,y,z,i;
+scanf("%d %d",&v,&e);//vertices and edges nos
+struct node x[v];//final
+struct new asd[e];//input values
+for(a=0;a<e;a++)
+{
+// printf("input number is %d\n",a);
+scanf("%d %d %d",&asd[a].st,&asd[a].en,&asd[a].val);
+}
+for(a=0;a<v;a++)
+{
+x[a].ver=-1;
+x[a].chain=0;
+}
+int count=0;
+b=-1;
+c=0;//chain up
+while(count<v-1)
+{
+//starting edge ,ending edge, chain no
+
+b++;
+q=asd[b].st;//starts
+y=asd[b].en;//ends
+
+if(x[q].ver+x[y].ver==2)//both the points are already visited
+{
+if(x[q].chain==x[y].chain )//condition for closed loop
+continue;
+else
+{
+
+d=x[y].chain;
+e=x[q].chain;
+for(a=0;a<v;a++)
+{
+if(x[a].chain==d)
+x[a].chain=e;
+}
+
+}
+
+}
+else if(x[q].ver+x[y].ver==0)//only one node is visited
+{
+d=asd[b].st;//starting vertex
+e=asd[b].en;//ending vertex
+if(x[d].ver==1)
+{
+x[e].ver=1;
+f=x[d].chain;
+g=x[e].chain;
+for(a=0;a<v;a++)
+{
+if(x[a].chain==g)
+{
+x[a].chain=f;
+}
+}
+}
+else
+{
+x[d].ver=1;
+f=x[e].chain;
+g=x[d].chain;
+for(a=0;a<v;a++)
+{
+if(x[a].chain==g)
+{
+x[a].chain=f;
+}
+}
+}
+}
+else//both are unvisited
+{
+c++;
+d=asd[b].st;//starting vertex
+e=asd[b].en;//ending vertex
+x[d].ver=1;
+x[e].ver=1;
+x[d].chain=c;
+x[e].chain=c;
+}ans=ans+asd[b].val;
+count++;
+}
+for(a=0;a<v;a++)
+{
+// printf("%d %d \n",x[a].ver,x[a].chain);
+}printf("ans is %d",ans);
+return 0;
+
+}
+	
+	
+	
+--Dijkstras
+#include<stdio.h>
+void main ()
+{
+  int a, b, c, d, e;
+  scanf ("%d", &a); //number of vertices in graph
+  int arr[a][a], ans[a], temp[2][a], f[a];
+  for (int i = 0; i < a; i++)
+    {
+      for (int j = 0; j < a; j++)
+{
+ scanf ("%d", &arr[i][j]); //input array
+}
+    }
+  for (int i = i; i < a; i++)
+    {
+      temp[0][i] = 30000;//initial distance to each point
+      temp[1][i] = -1;//set nodes as unvisited
+    }
+  temp[0][0] = 0;//initial point at zero distance
+  int index; //=0;
+//ans[0]=0;--
+  int count = 0;
+  while (count != a)
+    {
+      int signal, value;
+      signal = 5;
+      for (int i = 0; i < a; i++)
+{
+ if (temp[1][i] == 1)//if node is already visited
+   continue;
+ if (signal == 5)
+   {
+     index = i;
+     signal = 10;
+     value = temp[0][i]; /*printf("starting index is  %d--\n",index); */
+   }
+ if (temp[0][i] <= value)
+   {
+     index = i;
+//printf("index modified  %d  value was  %d  new value is %d --\n",index,value,temp[0][i]);
+   }
+} //printf("\n\n\n");
+
+      temp[1][index] = 1;
+      ans[index] = temp[0][index];
+      for (int i = 0; i < a; i++)
+{
+ if (arr[1][i] == 1)
+   continue;
+ f[i] = arr[index][i] + ans[index]; //printf("f[%d]==%d\n",i,f[i]);
+ if (f[i] < temp[0][i])
+   {
+//printf(" %d  f[i]=%d  temp[0][i]=%d",i,f[i],temp[0][i]);
+     temp[0][i] = f[i];
+   } //find min value
+}
+      count++;
+    }
+  for (int i = 0; i < a; i++)
+    {
+      printf ("%d\t", ans[i]);
+    }
+}
+
+	
+--Prims
+
+#include<stdio.h>
+void main ()
+{
+  int a, b, c, d, e;
+  scanf ("%d", &a); //number of vertices in graph
+  int arr[a][a], ans[a], temp[2][a], f[a];
+  for (int i = 0; i < a; i++)
+    {
+      for (int j = 0; j < a; j++)
+{
+ scanf ("%d", &arr[i][j]); //input array
+}
+    }
+  for (int i = i; i < a; i++)
+    {
+      temp[0][i] = 30000;//initial distance to each point
+      temp[1][i] = -1;//set nodes as unvisited
+    }
+  temp[0][0] = 0;//initial point at zero distance
+  int index; //=0;
+//ans[0]=0;--
+  int count = 0;
+  while (count != a)
+    {
+      int signal, value;
+      signal = 5;
+      for (int i = 0; i < a; i++)
+{
+ if (temp[1][i] == 1)//if node is already visited
+   continue;
+ if (signal == 5)
+   {
+     index = i;
+     signal = 10;
+     value = temp[0][i]; /*printf("starting index is  %d--\n",index); */
+   }
+ if (temp[0][i] <= value)
+   {
+     index = i;
+//printf("index modified  %d  value was  %d  new value is %d --\n",index,value,temp[0][i]);
+   }
+} //printf("\n\n\n");
+
+      temp[1][index] = 1;
+      ans[index] = temp[0][index];
+      for (int i = 0; i < a; i++)
+{
+ if (arr[1][i] == 1)
+   continue;
+ f[i] = arr[index][i] ;//+ ans[index]; //printf("f[%d]==%d\n",i,f[i]);
+ if (f[i] < temp[0][i])
+   {
+//printf(" %d  f[i]=%d  temp[0][i]=%d",i,f[i],temp[0][i]);
+     temp[0][i] = f[i];
+   } //find min value
+}
+      count++;
+    }int sol=0;
+  for (int i = 0; i < a; i++)
+    {
+      printf ("%d\t", ans[i]);
+      sol=sol+ans[i];
+    }printf("\nsol=%d",sol);
+}
+
+
+
+
+
+
